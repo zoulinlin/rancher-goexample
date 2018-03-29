@@ -1,0 +1,24 @@
+name: goexample
+stages:
+- name: clone
+  steps:
+  - sourceCodeConfig:
+      branch: master
+      branchCondition: only
+      url: https://github.com/gitlawr/goexample.git
+- name: build
+  steps:
+  - runScriptConfig:
+      image: golang:latest
+      isShell: true
+      shellScript: |-
+        mkdir -p /go/src/github.com/gitlawr
+        ln -s `pwd` /go/src/github.com/gitlawr/goexample
+        cd /go/src/github.com/gitlawr/goexample
+        go test
+- name: publish
+  steps:
+  - publishImageConfig:
+      buildContext: .
+      dockerfilePath: ./Dockerfile
+      tag: lawr/pipeline:dev_${CICD_GIT_COMMIT}
