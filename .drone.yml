@@ -1,0 +1,23 @@
+workspace:
+  base: /go
+  path: src/github.com/lawrli/goexample
+
+pipeline:
+  test:
+    image: golang:latest
+    commands:
+      - go get ./...
+      - go test
+  publish:
+    image: plugins/docker
+    repo: lawr/demo
+    tag: "${DRONE_COMMIT_SHA:0:8}"
+    secrets: [ docker_username, docker_password ]
+  deploy:
+    image: quay.io/honestbee/drone-kubernetes
+    deployment: demo
+    repo: lawr/demo
+    container: demo
+    tag: "${DRONE_COMMIT_SHA:0:8}"
+    namespace: drone
+    secrets: [ kubernetes_token, kubernetes_cert, kubernetes_server ]
