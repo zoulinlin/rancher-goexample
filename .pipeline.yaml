@@ -5,7 +5,7 @@ stages:
   - sourceCodeConfig:
       branch: master
       branchCondition: only
-      url: https://github.com/gitlawr/goexample.git
+      url: https://github.com/lawrli/goexample.git
 - name: build
   steps:
   - runScriptConfig:
