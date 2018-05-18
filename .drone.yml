@@ -1,6 +1,6 @@
 workspace:
   base: /go
-  path: src/github.com/lawrli/goexample
+  path: src/github.com/zoulinlin/rancher-goexample
 
 pipeline:
   test:
@@ -10,13 +10,13 @@ pipeline:
       - go test
   publish:
     image: plugins/docker
-    repo: lawr/demo
+    repo: zoulinlin/demo
     tag: "${DRONE_COMMIT_SHA:0:8}"
     secrets: [ docker_username, docker_password ]
   deploy:
     image: quay.io/honestbee/drone-kubernetes
     deployment: demo
-    repo: lawr/demo
+    repo: zoulinlin/demo
     container: demo
     tag: "${DRONE_COMMIT_SHA:0:8}"
     namespace: drone
